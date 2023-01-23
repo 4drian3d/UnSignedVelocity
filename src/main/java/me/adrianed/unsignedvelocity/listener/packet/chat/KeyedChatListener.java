@@ -41,7 +41,7 @@ public final class KeyedChatListener extends PacketListener<KeyedPlayerChat> {
 
     @Override
     public void packetReceive(PacketReceiveEvent<KeyedPlayerChat> event) {
-        System.out.println("Received KeyedPlayerChat on receive");
+        /*System.out.println("Received KeyedPlayerChat on receive");
         KeyedPlayerChat packet = event.packet();
         if (packet.isUnsigned()) {
             return;
@@ -59,12 +59,12 @@ public final class KeyedChatListener extends PacketListener<KeyedPlayerChat> {
                     }
 
                     map.put(packet, player);
-                });
+                });*/
     }
 
     @Override
     public void packetSend(PacketSendEvent<KeyedPlayerChat> event) {
-        System.out.println("Received KeyedPlayerChat on send");
+        /*System.out.println("Received KeyedPlayerChat on send");
         KeyedPlayerChat packet = event.packet();
         Player mapPlayer = map.get(packet);
 
@@ -82,7 +82,7 @@ public final class KeyedChatListener extends PacketListener<KeyedPlayerChat> {
             } catch (Throwable e) {
                 throw new RuntimeException(e);
             }
-        }
+        }*/
     }
 
     @Override

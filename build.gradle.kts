@@ -1,6 +1,7 @@
 plugins {
     java
     alias(libs.plugins.blossom)
+    alias(libs.plugins.runvelocity)
 }
 
 repositories {
@@ -26,6 +27,12 @@ tasks {
     compileJava {
         options.encoding = Charsets.UTF_8.name()
         options.release.set(11)
+    }
+    clean {
+        delete("run")
+    }
+    runVelocity {
+        velocityVersion(libs.versions.velocity.get())
     }
 }
 

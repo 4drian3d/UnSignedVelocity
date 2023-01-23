@@ -37,7 +37,7 @@ public final class SessionChatListener extends PacketListener<SessionPlayerChat>
 
     @Override
     public void packetReceive(PacketReceiveEvent<SessionPlayerChat> event) {
-        System.out.println("Received SessionPlayerChat on receive");
+        /*System.out.println("Received SessionPlayerChat on receive");
         final SessionPlayerChat packet = event.packet();
         if (!packet.isSigned()) {
             return;
@@ -51,13 +51,13 @@ public final class SessionChatListener extends PacketListener<SessionPlayerChat>
                     } catch (Throwable e) {
                         throw new RuntimeException(e);
                     }
-                });
+                });*/
 
     }
 
     @Override
     public void packetSend(PacketSendEvent<SessionPlayerChat> event) {
-        System.out.println("Received SessionPlayerChat on send");
+        /*System.out.println("Received SessionPlayerChat on send");
         final SessionPlayerChat packet = event.packet();
         var mapPlayer = map.get(packet);
 
@@ -75,7 +75,7 @@ public final class SessionChatListener extends PacketListener<SessionPlayerChat>
             } catch (Throwable e) {
                 throw new RuntimeException(e);
             }
-        }
+        }*/
     }
 
     @Override
