@@ -15,6 +15,7 @@ import me.adrianed.unsignedvelocity.listener.packet.chat.SessionChatListener;
 import me.adrianed.unsignedvelocity.listener.packet.command.KeyedCommandListener;
 import me.adrianed.unsignedvelocity.listener.packet.command.SessionCommandListener;
 import me.adrianed.unsignedvelocity.utils.Constants;
+import org.bstats.velocity.Metrics;
 import org.slf4j.Logger;
 
 import java.io.IOException;
@@ -38,6 +39,8 @@ public final class UnSignedVelocity {
     private Path path;
     @Inject
     private Logger logger;
+    @Inject
+    private Metrics.Factory factory;
     private Configuration configuration;
 
     @Subscribe
@@ -63,5 +66,9 @@ public final class UnSignedVelocity {
             .forEach(Listener::register);
 
         logger.info("UnSignedVelocity has been successfully loaded");
+        logger.info("Option removeSignedKey: {}", configuration.removeSignedKey());
+        logger.info("Option removeSignedCommandInformation: {}", configuration.removeSignedCommandInformation());
+
+        factory.make(this, 17514);
     }
 }
