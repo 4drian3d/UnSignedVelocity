@@ -1,0 +1,16 @@
+.gradle/
+/.idea/
+build/
+bin/
+
+# Visual Studio Code
+
+.settings/
+.classpath
+.factorypath
+.project
+.vscode/
+/run/
+
+# Intellij idea
+.idea
