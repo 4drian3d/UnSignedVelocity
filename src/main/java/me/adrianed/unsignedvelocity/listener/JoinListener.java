@@ -7,6 +7,7 @@ import com.velocitypowered.api.event.connection.PostLoginEvent;
 import com.velocitypowered.api.proxy.crypto.IdentifiedKey;
 import com.velocitypowered.proxy.connection.client.ConnectedPlayer;
 import me.adrianed.unsignedvelocity.UnSignedVelocity;
+import me.adrianed.unsignedvelocity.configuration.Configuration;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
@@ -26,6 +27,8 @@ public class JoinListener implements Listener {
     private EventManager eventManager;
     @Inject
     private UnSignedVelocity plugin;
+    @Inject
+    private Configuration configuration;
 
     @Subscribe
     void onJoin(PostLoginEvent event) throws Throwable {
@@ -35,5 +38,10 @@ public class JoinListener implements Listener {
     @Override
     public void register() {
         eventManager.register(plugin, this);
+    }
+
+    @Override
+    public boolean canBeLoaded() {
+        return configuration.removeSignedKey();
     }
 }

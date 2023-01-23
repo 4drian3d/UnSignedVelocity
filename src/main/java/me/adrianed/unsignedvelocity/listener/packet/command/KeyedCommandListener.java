@@ -1,8 +1,10 @@
 package me.adrianed.unsignedvelocity.listener.packet.command;
 
+import com.google.inject.Inject;
 import com.velocitypowered.proxy.protocol.packet.chat.keyed.KeyedPlayerCommand;
 import dev.simplix.protocolize.api.listener.PacketReceiveEvent;
 import dev.simplix.protocolize.api.listener.PacketSendEvent;
+import me.adrianed.unsignedvelocity.configuration.Configuration;
 import me.adrianed.unsignedvelocity.listener.packet.PacketListener;
 
 import java.lang.invoke.MethodHandle;
@@ -21,6 +23,10 @@ public class KeyedCommandListener extends PacketListener<KeyedPlayerCommand> {
             throw new RuntimeException(e);
         }
     }
+
+    @Inject
+    private Configuration configuration;
+
     public KeyedCommandListener() {
         super(KeyedPlayerCommand.class);
     }
@@ -42,5 +48,10 @@ public class KeyedCommandListener extends PacketListener<KeyedPlayerCommand> {
     @Override
     public void packetSend(PacketSendEvent<KeyedPlayerCommand> packetSendEvent) {
 
+    }
+
+    @Override
+    public boolean canBeLoaded() {
+        return configuration.removeSignedCommandInformation();
     }
 }

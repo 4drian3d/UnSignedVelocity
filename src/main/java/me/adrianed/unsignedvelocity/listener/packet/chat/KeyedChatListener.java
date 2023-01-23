@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.WeakHashMap;
 
+//TODO: Make it work
 public final class KeyedChatListener extends PacketListener<KeyedPlayerChat> {
     private static final MethodHandle UNSIGNED_SETTER;
     private static final MethodHandle SIGNED_PREVIEW;
@@ -82,5 +83,10 @@ public final class KeyedChatListener extends PacketListener<KeyedPlayerChat> {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    @Override
+    public boolean canBeLoaded() {
+        return false;
     }
 }

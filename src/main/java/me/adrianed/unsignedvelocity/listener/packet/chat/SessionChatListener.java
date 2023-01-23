@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.WeakHashMap;
 
+//TODO: Make it work
 public final class SessionChatListener extends PacketListener<SessionPlayerChat> {
     private static final MethodHandle SIGNED_SETTER;
 
@@ -75,5 +76,10 @@ public final class SessionChatListener extends PacketListener<SessionPlayerChat>
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    @Override
+    public boolean canBeLoaded() {
+        return false;
     }
 }

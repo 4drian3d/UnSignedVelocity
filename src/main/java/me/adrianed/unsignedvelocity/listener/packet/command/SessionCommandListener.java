@@ -1,10 +1,12 @@
 package me.adrianed.unsignedvelocity.listener.packet.command;
 
+import com.google.inject.Inject;
 import com.velocitypowered.proxy.protocol.packet.chat.LastSeenMessages;
 import com.velocitypowered.proxy.protocol.packet.chat.session.SessionPlayerCommand;
 import com.velocitypowered.proxy.protocol.packet.chat.session.SessionPlayerCommand.ArgumentSignatures;
 import dev.simplix.protocolize.api.listener.PacketReceiveEvent;
 import dev.simplix.protocolize.api.listener.PacketSendEvent;
+import me.adrianed.unsignedvelocity.configuration.Configuration;
 import me.adrianed.unsignedvelocity.listener.packet.PacketListener;
 
 import java.lang.invoke.MethodHandle;
@@ -27,7 +29,10 @@ public class SessionCommandListener extends PacketListener<SessionPlayerCommand>
             throw new RuntimeException(e);
         }
     }
-    protected SessionCommandListener() {
+
+    @Inject
+    private Configuration configuration;
+    public SessionCommandListener() {
         super(SessionPlayerCommand.class);
     }
 
@@ -48,5 +53,10 @@ public class SessionCommandListener extends PacketListener<SessionPlayerCommand>
 
     @Override
     public void packetSend(PacketSendEvent<SessionPlayerCommand> packetSendEvent) {
+    }
+
+    @Override
+    public boolean canBeLoaded() {
+        return configuration.removeSignedCommandInformation();
     }
 }
