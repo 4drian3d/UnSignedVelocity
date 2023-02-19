@@ -2,6 +2,13 @@
 
 Remove Signed Information from your Velocity Commands
 
-# Requirements
+## Requirements
 - Velocity 3.1.2+
 - Java 11+
+
+## Installation
+- Simply drag the plugin to your plugins folder and launch Velocity
+
+## Downloads
+
+[![](https://raw.githubusercontent.com/Prospector/badges/master/modrinth-badge-72h-padded.png)](https://modrinth.com/plugin/unsignedvelocity)
