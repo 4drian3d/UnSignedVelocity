@@ -53,7 +53,7 @@ public class SessionCommandListener implements EventListener {
     @Subscribe
     public void onCommand(PacketReceiveEvent event) {
         if (event.getPacket() instanceof SessionPlayerCommand) {
-            SessionPlayerCommand packet = (SessionPlayerCommand) event.getPacket();
+            final SessionPlayerCommand packet = (SessionPlayerCommand) event.getPacket();
 
             if (!packet.isSigned()) {
                 return;

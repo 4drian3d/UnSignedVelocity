@@ -47,7 +47,8 @@ public class KeyedCommandListener implements EventListener {
     @Subscribe
     public void onCommand(PacketReceiveEvent event) {
         if (event.getPacket() instanceof KeyedPlayerCommand) {
-            KeyedPlayerCommand packet = (KeyedPlayerCommand) event.getPacket();
+            final KeyedPlayerCommand packet = (KeyedPlayerCommand) event.getPacket();
+
             if (packet.isUnsigned()) {
                 return;
             }
