@@ -1,13 +1,13 @@
-package me.adrianed.unsignedvelocity.listener.packet.command;
+package io.github._4drian3d.unsignedvelocity.listener.packet.command;
 
 import com.google.inject.Inject;
 import com.velocitypowered.api.event.EventManager;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.proxy.protocol.packet.chat.keyed.KeyedPlayerCommand;
-import me.adrianed.unsignedvelocity.UnSignedVelocity;
-import me.adrianed.unsignedvelocity.configuration.Configuration;
-import me.adrianed.unsignedvelocity.event.PacketReceiveEvent;
-import me.adrianed.unsignedvelocity.listener.EventListener;
+import io.github._4drian3d.unsignedvelocity.event.PacketReceiveEvent;
+import io.github._4drian3d.unsignedvelocity.listener.EventListener;
+import io.github._4drian3d.unsignedvelocity.UnSignedVelocity;
+import io.github._4drian3d.unsignedvelocity.configuration.Configuration;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;

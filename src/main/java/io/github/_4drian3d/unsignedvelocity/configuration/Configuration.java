@@ -1,4 +1,4 @@
-package me.adrianed.unsignedvelocity.configuration;
+package io.github._4drian3d.unsignedvelocity.configuration;
 
 import ninja.leaping.configurate.commented.CommentedConfigurationNode;
 import ninja.leaping.configurate.hocon.HoconConfigurationLoader;

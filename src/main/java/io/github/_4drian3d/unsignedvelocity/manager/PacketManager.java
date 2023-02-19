@@ -1,11 +1,11 @@
-package me.adrianed.unsignedvelocity.manager;
+package io.github._4drian3d.unsignedvelocity.manager;
 
 import com.velocitypowered.api.event.EventManager;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.proxy.connection.client.ConnectedPlayer;
 import com.velocitypowered.proxy.network.Connections;
 import io.netty.channel.Channel;
-import me.adrianed.unsignedvelocity.handler.PlayerChannelHandler;
+import io.github._4drian3d.unsignedvelocity.handler.PlayerChannelHandler;
 
 public class PacketManager {
     private static final String KEY = "unsigned-velocity";

@@ -1,4 +1,4 @@
-package me.adrianed.unsignedvelocity.event;
+package io.github._4drian3d.unsignedvelocity.event;
 
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.proxy.protocol.MinecraftPacket;

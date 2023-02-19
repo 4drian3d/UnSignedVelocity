@@ -1,10 +1,10 @@
-package me.adrianed.unsignedvelocity.listener.packet.chat;
+package io.github._4drian3d.unsignedvelocity.listener.packet.chat;
 
 import com.google.inject.Inject;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.proxy.protocol.packet.chat.session.SessionPlayerChat;
-import me.adrianed.unsignedvelocity.listener.EventListener;
+import io.github._4drian3d.unsignedvelocity.listener.EventListener;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;

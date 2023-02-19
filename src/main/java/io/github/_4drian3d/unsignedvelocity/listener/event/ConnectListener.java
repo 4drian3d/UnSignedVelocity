@@ -1,4 +1,4 @@
-package me.adrianed.unsignedvelocity.listener.event;
+package io.github._4drian3d.unsignedvelocity.listener.event;
 
 import com.google.inject.Inject;
 import com.velocitypowered.api.event.EventManager;
@@ -8,10 +8,10 @@ import com.velocitypowered.api.event.connection.DisconnectEvent;
 import com.velocitypowered.api.event.connection.PostLoginEvent;
 import com.velocitypowered.api.proxy.crypto.IdentifiedKey;
 import com.velocitypowered.proxy.connection.client.ConnectedPlayer;
-import me.adrianed.unsignedvelocity.UnSignedVelocity;
-import me.adrianed.unsignedvelocity.configuration.Configuration;
-import me.adrianed.unsignedvelocity.listener.EventListener;
-import me.adrianed.unsignedvelocity.manager.PacketManager;
+import io.github._4drian3d.unsignedvelocity.listener.EventListener;
+import io.github._4drian3d.unsignedvelocity.manager.PacketManager;
+import io.github._4drian3d.unsignedvelocity.UnSignedVelocity;
+import io.github._4drian3d.unsignedvelocity.configuration.Configuration;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;

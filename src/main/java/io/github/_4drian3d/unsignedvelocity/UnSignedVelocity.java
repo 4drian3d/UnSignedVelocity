@@ -1,4 +1,4 @@
-package me.adrianed.unsignedvelocity;
+package io.github._4drian3d.unsignedvelocity;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
@@ -7,13 +7,13 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
-import me.adrianed.unsignedvelocity.configuration.Configuration;
-import me.adrianed.unsignedvelocity.listener.EventListener;
-import me.adrianed.unsignedvelocity.listener.event.ConnectListener;
-import me.adrianed.unsignedvelocity.listener.packet.command.KeyedCommandListener;
-import me.adrianed.unsignedvelocity.listener.packet.command.SessionCommandListener;
-import me.adrianed.unsignedvelocity.manager.PacketManager;
-import me.adrianed.unsignedvelocity.utils.Constants;
+import io.github._4drian3d.unsignedvelocity.listener.EventListener;
+import io.github._4drian3d.unsignedvelocity.listener.event.ConnectListener;
+import io.github._4drian3d.unsignedvelocity.listener.packet.command.KeyedCommandListener;
+import io.github._4drian3d.unsignedvelocity.manager.PacketManager;
+import io.github._4drian3d.unsignedvelocity.utils.Constants;
+import io.github._4drian3d.unsignedvelocity.configuration.Configuration;
+import io.github._4drian3d.unsignedvelocity.listener.packet.command.SessionCommandListener;
 import org.bstats.velocity.Metrics;
 import org.slf4j.Logger;
 

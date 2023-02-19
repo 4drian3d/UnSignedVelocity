@@ -1,14 +1,14 @@
-package me.adrianed.unsignedvelocity.handler;
+package io.github._4drian3d.unsignedvelocity.handler;
 
 import com.velocitypowered.api.event.EventManager;
 import com.velocitypowered.api.event.ResultedEvent;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.proxy.protocol.MinecraftPacket;
+import io.github._4drian3d.unsignedvelocity.event.PacketReceiveEvent;
+import io.github._4drian3d.unsignedvelocity.event.PacketSendEvent;
 import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPromise;
-import me.adrianed.unsignedvelocity.event.PacketReceiveEvent;
-import me.adrianed.unsignedvelocity.event.PacketSendEvent;
 import org.jetbrains.annotations.NotNull;
 
 public final class PlayerChannelHandler extends ChannelDuplexHandler {

@@ -20,7 +20,7 @@ dependencies {
 }
 
 blossom {
-    replaceTokenIn("src/main/java/me/adrianed/unsignedvelocity/utils/Constants.java")
+    replaceTokenIn("src/main/java/io/github/_4drian3d/unsignedvelocity/utils/Constants.java")
     replaceToken("{version}", version)
 }
 
@@ -36,7 +36,7 @@ tasks {
         delete("run")
     }
     shadowJar {
-        relocate("org.bstats", "me.adrianed.unsignedvelocity.libs.bstats")
+        relocate("org.bstats", "io.github._4drian3d.unsignedvelocity.libs.bstats")
         minimize()
     }
     runVelocity {
