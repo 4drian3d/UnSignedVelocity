@@ -16,7 +16,7 @@ dependencies {
     compileOnly(libs.velocity.api)
     compileOnly(libs.velocity.proxy)
     annotationProcessor(libs.velocity.api)
-    compileOnly("io.netty:netty-all:4.1.87.Final")
+    compileOnly(libs.netty)
 }
 
 blossom {

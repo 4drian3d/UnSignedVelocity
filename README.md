@@ -5,4 +5,3 @@ Remove Signed Information from your Velocity Commands
 # Requirements
 - Velocity 3.1.2+
 - Java 11+
-- [Protocolize](https://www.spigotmc.org/resources/protocolize-protocollib-for-bungeecord-waterfall-velocity.63778/)
