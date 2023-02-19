@@ -1,18 +1,21 @@
 package me.adrianed.unsignedvelocity.listener.packet.command;
 
 import com.google.inject.Inject;
+import com.velocitypowered.api.event.EventManager;
+import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.proxy.protocol.packet.chat.LastSeenMessages;
 import com.velocitypowered.proxy.protocol.packet.chat.session.SessionPlayerCommand;
 import com.velocitypowered.proxy.protocol.packet.chat.session.SessionPlayerCommand.ArgumentSignatures;
-import dev.simplix.protocolize.api.listener.PacketReceiveEvent;
-import dev.simplix.protocolize.api.listener.PacketSendEvent;
+import me.adrianed.unsignedvelocity.UnSignedVelocity;
 import me.adrianed.unsignedvelocity.configuration.Configuration;
-import me.adrianed.unsignedvelocity.listener.packet.PacketListener;
+
+import me.adrianed.unsignedvelocity.event.PacketReceiveEvent;
+import me.adrianed.unsignedvelocity.listener.EventListener;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 
-public class SessionCommandListener extends PacketListener<SessionPlayerCommand> {
+public class SessionCommandListener implements EventListener {
     private static final MethodHandle SALT_SETTER;
     private static final MethodHandle LAST_SEEN_MESSAGES_SETTER;
     private static final MethodHandle SIGNATURE_SETTER;
@@ -32,31 +35,37 @@ public class SessionCommandListener extends PacketListener<SessionPlayerCommand>
 
     @Inject
     private Configuration configuration;
-    public SessionCommandListener() {
-        super(SessionPlayerCommand.class);
-    }
+    @Inject
+    private EventManager eventManager;
+    @Inject
+    private UnSignedVelocity plugin;
 
     @Override
-    public void packetReceive(PacketReceiveEvent<SessionPlayerCommand> event) {
-        final SessionPlayerCommand packet = event.packet();
-        if (!packet.isSigned()) {
-            return;
-        }
-        try {
-            LAST_SEEN_MESSAGES_SETTER.invoke(packet, EMPTY_SEEN_MESSAGES);
-            SIGNATURE_SETTER.invoke(packet, EMPTY_SIGNATURES);
-            SALT_SETTER.invoke(packet, 0);
-        } catch (Throwable t) {
-            throw new RuntimeException(t);
-        }
-    }
-
-    @Override
-    public void packetSend(PacketSendEvent<SessionPlayerCommand> packetSendEvent) {
+    public void register() {
+        eventManager.register(plugin, this);
     }
 
     @Override
     public boolean canBeLoaded() {
         return configuration.removeSignedCommandInformation();
+    }
+
+    @Subscribe
+    public void onCommand(PacketReceiveEvent event) {
+        if (event.getPacket() instanceof SessionPlayerCommand) {
+            final SessionPlayerCommand packet = (SessionPlayerCommand) event.getPacket();
+
+            if (!packet.isSigned()) {
+                return;
+            }
+            try {
+                LAST_SEEN_MESSAGES_SETTER.invoke(packet, EMPTY_SEEN_MESSAGES);
+                SIGNATURE_SETTER.invoke(packet, EMPTY_SIGNATURES);
+                SALT_SETTER.invoke(packet, 0);
+            } catch (Throwable t) {
+                throw new RuntimeException(t);
+            }
+        }
+
     }
 }

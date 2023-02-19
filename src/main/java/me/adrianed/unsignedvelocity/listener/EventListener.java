@@ -1,7 +1,6 @@
 package me.adrianed.unsignedvelocity.listener;
 
-public interface Listener {
+public interface EventListener {
     void register();
-
     boolean canBeLoaded();
 }

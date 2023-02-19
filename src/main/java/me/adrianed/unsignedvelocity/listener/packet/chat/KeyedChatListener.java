@@ -1,22 +1,18 @@
 package me.adrianed.unsignedvelocity.listener.packet.chat;
 
 import com.google.inject.Inject;
-import com.velocitypowered.api.network.ProtocolVersion;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.proxy.protocol.packet.chat.keyed.KeyedPlayerChat;
-import dev.simplix.protocolize.api.listener.PacketReceiveEvent;
-import dev.simplix.protocolize.api.listener.PacketSendEvent;
-import me.adrianed.unsignedvelocity.listener.packet.PacketListener;
+import me.adrianed.unsignedvelocity.listener.EventListener;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.util.Map;
-import java.util.Objects;
 import java.util.WeakHashMap;
 
 //TODO: Make it work
-public final class KeyedChatListener extends PacketListener<KeyedPlayerChat> {
+public final class KeyedChatListener implements EventListener {
     private static final MethodHandle UNSIGNED_SETTER;
     private static final MethodHandle SIGNED_PREVIEW;
 
@@ -33,56 +29,11 @@ public final class KeyedChatListener extends PacketListener<KeyedPlayerChat> {
     @Inject
     private ProxyServer proxyServer;
 
-    public KeyedChatListener() {
-        super(KeyedPlayerChat.class);
-    }
-
     private final Map<KeyedPlayerChat, Player> map = new WeakHashMap<>();
 
     @Override
-    public void packetReceive(PacketReceiveEvent<KeyedPlayerChat> event) {
-        /*System.out.println("Received KeyedPlayerChat on receive");
-        KeyedPlayerChat packet = event.packet();
-        if (packet.isUnsigned()) {
-            return;
-        }
-        proxyServer.getPlayer(event.player().uniqueId())
-                .ifPresent(player -> {
-                    try {
-                        UNSIGNED_SETTER.invoke(packet, true);
-                        if (!player.getProtocolVersion().equals(ProtocolVersion.MINECRAFT_1_19_1)) {
-                            SIGNED_PREVIEW.invoke(packet, false);
-                        }
+    public void register() {
 
-                    } catch (Throwable e) {
-                        throw new RuntimeException(e);
-                    }
-
-                    map.put(packet, player);
-                });*/
-    }
-
-    @Override
-    public void packetSend(PacketSendEvent<KeyedPlayerChat> event) {
-        /*System.out.println("Received KeyedPlayerChat on send");
-        KeyedPlayerChat packet = event.packet();
-        Player mapPlayer = map.get(packet);
-
-        if (mapPlayer == null) {
-            return;
-        }
-
-        Player player = proxyServer.getPlayer(event.player().uniqueId())
-                .orElse(null);
-
-        if (Objects.equals(mapPlayer, player)) {
-            try {
-                map.remove(packet);
-                UNSIGNED_SETTER.invoke(packet, false);
-            } catch (Throwable e) {
-                throw new RuntimeException(e);
-            }
-        }*/
     }
 
     @Override

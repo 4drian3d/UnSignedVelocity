@@ -1,16 +1,18 @@
 package me.adrianed.unsignedvelocity.listener.packet.command;
 
 import com.google.inject.Inject;
+import com.velocitypowered.api.event.EventManager;
+import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.proxy.protocol.packet.chat.keyed.KeyedPlayerCommand;
-import dev.simplix.protocolize.api.listener.PacketReceiveEvent;
-import dev.simplix.protocolize.api.listener.PacketSendEvent;
+import me.adrianed.unsignedvelocity.UnSignedVelocity;
 import me.adrianed.unsignedvelocity.configuration.Configuration;
-import me.adrianed.unsignedvelocity.listener.packet.PacketListener;
+import me.adrianed.unsignedvelocity.event.PacketReceiveEvent;
+import me.adrianed.unsignedvelocity.listener.EventListener;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 
-public class KeyedCommandListener extends PacketListener<KeyedPlayerCommand> {
+public class KeyedCommandListener implements EventListener {
     private static final MethodHandle UNSIGNED_SETTER;
     private static final MethodHandle SIGNED_PREVIEW;
 
@@ -26,32 +28,36 @@ public class KeyedCommandListener extends PacketListener<KeyedPlayerCommand> {
 
     @Inject
     private Configuration configuration;
-
-    public KeyedCommandListener() {
-        super(KeyedPlayerCommand.class);
-    }
-
-    @Override
-    public void packetReceive(PacketReceiveEvent<KeyedPlayerCommand> event) {
-        KeyedPlayerCommand packet = event.packet();
-        if (packet.isUnsigned()) {
-            return;
-        }
-        try {
-            UNSIGNED_SETTER.invoke(packet, true);
-            SIGNED_PREVIEW.invoke(packet, false);
-        } catch (Throwable e) {
-            throw new RuntimeException(e);
-        }
-    }
+    @Inject
+    private EventManager eventManager;
+    @Inject
+    private UnSignedVelocity plugin;
 
     @Override
-    public void packetSend(PacketSendEvent<KeyedPlayerCommand> packetSendEvent) {
-
+    public void register() {
+        eventManager.register(plugin, this);
     }
 
     @Override
     public boolean canBeLoaded() {
         return configuration.removeSignedCommandInformation();
+    }
+
+
+    @Subscribe
+    public void onCommand(PacketReceiveEvent event) {
+        if (event.getPacket() instanceof KeyedPlayerCommand) {
+            final KeyedPlayerCommand packet = (KeyedPlayerCommand) event.getPacket();
+
+            if (packet.isUnsigned()) {
+                return;
+            }
+            try {
+                UNSIGNED_SETTER.invoke(packet, true);
+                SIGNED_PREVIEW.invoke(packet, false);
+            } catch (Throwable e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 }

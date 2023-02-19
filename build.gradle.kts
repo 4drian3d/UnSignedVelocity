@@ -8,7 +8,6 @@ plugins {
 repositories {
     mavenCentral()
     maven("https://papermc.io/repo/repository/maven-public/")
-    maven("https://mvn.exceptionflug.de/repository/exceptionflug-public/")
     maven("https://maven.elytrium.net/repo/")
 }
 
@@ -17,7 +16,7 @@ dependencies {
     compileOnly(libs.velocity.api)
     compileOnly(libs.velocity.proxy)
     annotationProcessor(libs.velocity.api)
-    compileOnly(libs.protocolize)
+    compileOnly("io.netty:netty-all:4.1.87.Final")
 }
 
 blossom {
