@@ -6,9 +6,9 @@ plugins {
 }
 
 repositories {
-    mavenCentral()
     maven("https://papermc.io/repo/repository/maven-public/")
     maven("https://maven.elytrium.net/repo/")
+    mavenCentral()
 }
 
 dependencies {
@@ -17,6 +17,7 @@ dependencies {
     compileOnly(libs.velocity.proxy)
     annotationProcessor(libs.velocity.api)
     compileOnly(libs.netty)
+    compileOnly(libs.vpacketevents)
 }
 
 blossom {

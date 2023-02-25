@@ -2,14 +2,11 @@ package io.github._4drian3d.unsignedvelocity.listener.event;
 
 import com.google.inject.Inject;
 import com.velocitypowered.api.event.EventManager;
-import com.velocitypowered.api.event.PostOrder;
 import com.velocitypowered.api.event.Subscribe;
-import com.velocitypowered.api.event.connection.DisconnectEvent;
 import com.velocitypowered.api.event.connection.PostLoginEvent;
 import com.velocitypowered.api.proxy.crypto.IdentifiedKey;
 import com.velocitypowered.proxy.connection.client.ConnectedPlayer;
 import io.github._4drian3d.unsignedvelocity.listener.EventListener;
-import io.github._4drian3d.unsignedvelocity.manager.PacketManager;
 import io.github._4drian3d.unsignedvelocity.UnSignedVelocity;
 import io.github._4drian3d.unsignedvelocity.configuration.Configuration;
 
@@ -32,8 +29,6 @@ public class ConnectListener implements EventListener {
     @Inject
     private UnSignedVelocity plugin;
     @Inject
-    private PacketManager packetManager;
-    @Inject
     private Configuration configuration;
 
     @Subscribe
@@ -41,16 +36,6 @@ public class ConnectListener implements EventListener {
         if (configuration.removeSignedKey()) {
             KEY_SETTER.invoke(event.getPlayer(), null);
         }
-
-        packetManager.injectPlayer(event.getPlayer());
-    }
-
-    @Subscribe(order = PostOrder.LAST)
-    void onDisconnect(DisconnectEvent event) {
-        if (event.getLoginStatus() == DisconnectEvent.LoginStatus.CONFLICTING_LOGIN) {
-            return;
-        }
-        packetManager.removePlayer(event.getPlayer());
     }
 
     @Override
