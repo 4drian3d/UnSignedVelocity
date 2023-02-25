@@ -2,14 +2,13 @@ package io.github._4drian3d.unsignedvelocity.listener.packet.command;
 
 import com.google.inject.Inject;
 import com.velocitypowered.api.event.EventManager;
-import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.proxy.protocol.packet.chat.LastSeenMessages;
 import com.velocitypowered.proxy.protocol.packet.chat.session.SessionPlayerCommand;
 import com.velocitypowered.proxy.protocol.packet.chat.session.SessionPlayerCommand.ArgumentSignatures;
 import io.github._4drian3d.unsignedvelocity.UnSignedVelocity;
-import io.github._4drian3d.unsignedvelocity.event.PacketReceiveEvent;
 import io.github._4drian3d.unsignedvelocity.listener.EventListener;
 import io.github._4drian3d.unsignedvelocity.configuration.Configuration;
+import io.github._4drian3d.vpacketevents.api.event.PacketReceiveEvent;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
@@ -41,7 +40,7 @@ public class SessionCommandListener implements EventListener {
 
     @Override
     public void register() {
-        eventManager.register(plugin, this);
+        eventManager.register(plugin, PacketReceiveEvent.class, this::onCommand);
     }
 
     @Override
@@ -49,7 +48,6 @@ public class SessionCommandListener implements EventListener {
         return configuration.removeSignedCommandInformation();
     }
 
-    @Subscribe
     public void onCommand(PacketReceiveEvent event) {
         if (event.getPacket() instanceof SessionPlayerCommand) {
             final SessionPlayerCommand packet = (SessionPlayerCommand) event.getPacket();
@@ -65,6 +63,5 @@ public class SessionCommandListener implements EventListener {
                 throw new RuntimeException(t);
             }
         }
-
     }
 }
