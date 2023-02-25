@@ -7,9 +7,9 @@ import com.velocitypowered.proxy.protocol.packet.chat.LastSeenMessages;
 import com.velocitypowered.proxy.protocol.packet.chat.session.SessionPlayerCommand;
 import com.velocitypowered.proxy.protocol.packet.chat.session.SessionPlayerCommand.ArgumentSignatures;
 import io.github._4drian3d.unsignedvelocity.UnSignedVelocity;
-import io.github._4drian3d.unsignedvelocity.event.PacketReceiveEvent;
 import io.github._4drian3d.unsignedvelocity.listener.EventListener;
 import io.github._4drian3d.unsignedvelocity.configuration.Configuration;
+import io.github._4drian3d.vpacketevents.api.event.PacketReceiveEvent;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
