@@ -13,6 +13,8 @@ public interface Configuration {
 
     boolean removeSignedCommandInformation();
 
+    boolean applyChatMessages();
+
     static Configuration loadConfig(final Path path) throws IOException {
         final Path configPath = loadFiles(path);
         final HoconConfigurationLoader loader = HoconConfigurationLoader.builder()
@@ -25,6 +27,8 @@ public interface Configuration {
                 .getBoolean(false);
         final boolean removeSigneCommandInformation = loaded.getNode("remove-signed-command-information")
                 .getBoolean(false);
+        final boolean applyChatMessages = loaded.getNode("apply-chat-messages")
+                .getBoolean(true);
 
         return new Configuration() {
             @Override
@@ -35,6 +39,11 @@ public interface Configuration {
             @Override
             public boolean removeSignedCommandInformation() {
                 return removeSigneCommandInformation;
+            }
+
+            @Override
+            public boolean applyChatMessages() {
+                return applyChatMessages;
             }
         };
     }

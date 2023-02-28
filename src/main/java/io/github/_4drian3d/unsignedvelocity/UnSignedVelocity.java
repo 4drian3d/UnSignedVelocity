@@ -9,6 +9,8 @@ import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import io.github._4drian3d.unsignedvelocity.listener.EventListener;
 import io.github._4drian3d.unsignedvelocity.listener.event.ConnectListener;
+import io.github._4drian3d.unsignedvelocity.listener.packet.chat.KeyedChatListener;
+import io.github._4drian3d.unsignedvelocity.listener.packet.chat.SessionChatListener;
 import io.github._4drian3d.unsignedvelocity.listener.packet.command.KeyedCommandListener;
 import io.github._4drian3d.unsignedvelocity.utils.Constants;
 import io.github._4drian3d.unsignedvelocity.configuration.Configuration;
@@ -56,7 +58,9 @@ public final class UnSignedVelocity {
         Stream.of(
             ConnectListener.class,
             KeyedCommandListener.class,
-            SessionCommandListener.class
+            SessionCommandListener.class,
+            KeyedChatListener.class,
+            SessionChatListener.class
         ).map(injector::getInstance)
         .filter(EventListener::canBeLoaded)
         .forEach(EventListener::register);
