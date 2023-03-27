@@ -2,41 +2,33 @@ package io.github._4drian3d.unsignedvelocity.listener.packet.command;
 
 import com.google.inject.Inject;
 import com.velocitypowered.api.event.EventManager;
-import com.velocitypowered.proxy.protocol.packet.chat.LastSeenMessages;
+import com.velocitypowered.api.event.ResultedEvent;
+import com.velocitypowered.api.event.command.CommandExecuteEvent;
+import com.velocitypowered.api.proxy.ProxyServer;
+import com.velocitypowered.proxy.VelocityServer;
+import com.velocitypowered.proxy.connection.client.ConnectedPlayer;
+import com.velocitypowered.proxy.protocol.packet.chat.CommandHandler;
 import com.velocitypowered.proxy.protocol.packet.chat.session.SessionPlayerCommand;
-import com.velocitypowered.proxy.protocol.packet.chat.session.SessionPlayerCommand.ArgumentSignatures;
 import io.github._4drian3d.unsignedvelocity.UnSignedVelocity;
-import io.github._4drian3d.unsignedvelocity.listener.EventListener;
 import io.github._4drian3d.unsignedvelocity.configuration.Configuration;
+import io.github._4drian3d.unsignedvelocity.listener.EventListener;
 import io.github._4drian3d.vpacketevents.api.event.PacketReceiveEvent;
 
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.MethodHandles;
+import java.util.concurrent.CompletableFuture;
 
-public class SessionCommandListener implements EventListener {
-    private static final MethodHandle SALT_SETTER;
-    private static final MethodHandle LAST_SEEN_MESSAGES_SETTER;
-    private static final MethodHandle SIGNATURE_SETTER;
-    private static final ArgumentSignatures EMPTY_SIGNATURES = new ArgumentSignatures();
-    private static final LastSeenMessages EMPTY_SEEN_MESSAGES = new LastSeenMessages();
-
-    static {
-        try {
-            final var lookup = MethodHandles.privateLookupIn(SessionPlayerCommand.class, MethodHandles.lookup());
-            SALT_SETTER = lookup.findSetter(SessionPlayerCommand.class, "salt", long.class);
-            LAST_SEEN_MESSAGES_SETTER = lookup.findSetter(SessionPlayerCommand.class, "lastSeenMessages", LastSeenMessages.class);
-            SIGNATURE_SETTER = lookup.findSetter(SessionPlayerCommand.class, "argumentSignatures", ArgumentSignatures.class);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
+public class SessionCommandListener implements EventListener, CommandHandler<SessionPlayerCommand> {
     @Inject
     private Configuration configuration;
     @Inject
     private EventManager eventManager;
     @Inject
     private UnSignedVelocity plugin;
+    private final VelocityServer proxyServer;
+
+    @Inject
+    public SessionCommandListener(ProxyServer proxyServer) {
+        this.proxyServer = (VelocityServer) proxyServer;
+    }
 
     @Override
     public void register() {
@@ -48,20 +40,60 @@ public class SessionCommandListener implements EventListener {
         return configuration.removeSignedCommandInformation();
     }
 
-    public void onCommand(PacketReceiveEvent event) {
-        if (event.getPacket() instanceof SessionPlayerCommand) {
-            final SessionPlayerCommand packet = (SessionPlayerCommand) event.getPacket();
-
-            if (!packet.isSigned()) {
-                return;
-            }
-            try {
-                LAST_SEEN_MESSAGES_SETTER.invoke(packet, EMPTY_SEEN_MESSAGES);
-                SIGNATURE_SETTER.invoke(packet, EMPTY_SIGNATURES);
-                SALT_SETTER.invoke(packet, 0);
-            } catch (Throwable t) {
-                throw new RuntimeException(t);
-            }
+    public void onCommand(final PacketReceiveEvent event) {
+        if (!(event.getPacket() instanceof SessionPlayerCommand)) {
+            return;
         }
+        event.setResult(ResultedEvent.GenericResult.denied());
+
+        final SessionPlayerCommand packet = (SessionPlayerCommand) event.getPacket();
+        final ConnectedPlayer player = (ConnectedPlayer) event.getPlayer();
+        final String commandExecuted = packet.getCommand();
+
+        queueCommandResult(proxyServer, player, commandEvent -> {
+            final CommandExecuteEvent.CommandResult result = commandEvent.getResult();
+            if (result == CommandExecuteEvent.CommandResult.denied()) {
+                return CompletableFuture.completedFuture(null);
+            }
+
+            final String commandToRun = result.getCommand().orElse(commandExecuted);
+            if (result.isForwardToServer()) {
+                if (commandToRun.equals(commandExecuted)) {
+                    return CompletableFuture.completedFuture(packet);
+                } else {
+                    return CompletableFuture.completedFuture(player.getChatBuilderFactory()
+                            .builder()
+                            .setTimestamp(packet.getTimeStamp())
+                            .asPlayer(player)
+                            .message("/" + commandToRun)
+                            .toServer());
+                }
+            }
+
+            return runCommand(proxyServer, player, commandToRun, hasRun -> {
+                if (hasRun) return null;
+
+                if (commandToRun.equals(commandExecuted)) {
+                    return packet;
+                } else {
+                    return player.getChatBuilderFactory()
+                            .builder()
+                            .setTimestamp(packet.getTimeStamp())
+                            .asPlayer(player)
+                            .message("/" + commandToRun)
+                            .toServer();
+                }
+            });
+        }, commandExecuted, packet.getTimeStamp());
+    }
+
+    @Override
+    public Class<SessionPlayerCommand> packetClass() {
+        return SessionPlayerCommand.class;
+    }
+
+    @Override
+    public void handlePlayerCommandInternal(SessionPlayerCommand sessionPlayerCommand) {
+        // noop
     }
 }
