@@ -15,6 +15,8 @@ public interface Configuration {
 
     boolean applyChatMessages();
 
+    boolean sendSecureChatData();
+
     static Configuration loadConfig(final Path path) throws IOException {
         final Path configPath = loadFiles(path);
         final HoconConfigurationLoader loader = HoconConfigurationLoader.builder()
@@ -29,6 +31,8 @@ public interface Configuration {
                 .getBoolean(false);
         final boolean applyChatMessages = loaded.getNode("apply-chat-messages")
                 .getBoolean(true);
+        final boolean sendSecureChatData = loaded.getNode("send-secure-chat-data")
+                .getBoolean(false);
 
         return new Configuration() {
             @Override
@@ -44,6 +48,11 @@ public interface Configuration {
             @Override
             public boolean applyChatMessages() {
                 return applyChatMessages;
+            }
+
+            @Override
+            public boolean sendSecureChatData() {
+                return sendSecureChatData;
             }
         };
     }

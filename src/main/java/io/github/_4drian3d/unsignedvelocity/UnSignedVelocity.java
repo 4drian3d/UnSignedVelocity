@@ -7,14 +7,15 @@ import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Dependency;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
+import io.github._4drian3d.unsignedvelocity.configuration.Configuration;
 import io.github._4drian3d.unsignedvelocity.listener.EventListener;
 import io.github._4drian3d.unsignedvelocity.listener.event.ConnectListener;
 import io.github._4drian3d.unsignedvelocity.listener.packet.chat.KeyedChatListener;
 import io.github._4drian3d.unsignedvelocity.listener.packet.chat.SessionChatListener;
 import io.github._4drian3d.unsignedvelocity.listener.packet.command.KeyedCommandListener;
-import io.github._4drian3d.unsignedvelocity.utils.Constants;
-import io.github._4drian3d.unsignedvelocity.configuration.Configuration;
 import io.github._4drian3d.unsignedvelocity.listener.packet.command.SessionCommandListener;
+import io.github._4drian3d.unsignedvelocity.listener.packet.data.ServerDataListener;
+import io.github._4drian3d.unsignedvelocity.utils.Constants;
 import org.bstats.velocity.Metrics;
 import org.slf4j.Logger;
 
@@ -60,7 +61,8 @@ public final class UnSignedVelocity {
             KeyedCommandListener.class,
             SessionCommandListener.class,
             KeyedChatListener.class,
-            SessionChatListener.class
+            SessionChatListener.class,
+            ServerDataListener.class
         ).map(injector::getInstance)
         .filter(EventListener::canBeLoaded)
         .forEach(EventListener::register);
