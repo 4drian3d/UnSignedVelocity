@@ -45,6 +45,8 @@ public final class UnSignedVelocity {
 
     @Subscribe
     void onProxyInitialize(ProxyInitializeEvent event) {
+        factory.make(this, 17514);
+
         try {
             configuration = Configuration.loadConfig(path);
         } catch (IOException e) {
@@ -68,9 +70,10 @@ public final class UnSignedVelocity {
         .forEach(EventListener::register);
 
         logger.info("UnSignedVelocity has been successfully loaded");
-        logger.info("Option removeSignedKey: {}", configuration.removeSignedKey());
-        logger.info("Option removeSignedCommandInformation: {}", configuration.removeSignedCommandInformation());
-
-        factory.make(this, 17514);
+        logger.info("Remove Signed Key: {}", configuration.removeSignedKey());
+        logger.info("UnSigned | Commands: {} | Chat: {}",
+                configuration.removeSignedCommandInformation(),
+                configuration.applyChatMessages());
+        logger.info("Secure Chat Data: {}", configuration.sendSecureChatData());
     }
 }
