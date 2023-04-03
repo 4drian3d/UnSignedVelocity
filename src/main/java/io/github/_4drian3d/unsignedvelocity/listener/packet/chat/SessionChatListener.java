@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import com.velocitypowered.api.event.EventManager;
 import com.velocitypowered.api.event.ResultedEvent;
 import com.velocitypowered.api.event.player.PlayerChatEvent;
-import com.velocitypowered.api.network.ProtocolVersion;
 import com.velocitypowered.proxy.connection.client.ConnectedPlayer;
 import com.velocitypowered.proxy.protocol.packet.chat.session.SessionPlayerChat;
 import io.github._4drian3d.unsignedvelocity.UnSignedVelocity;
@@ -13,7 +12,6 @@ import io.github._4drian3d.unsignedvelocity.listener.EventListener;
 import io.github._4drian3d.vpacketevents.api.event.PacketReceiveEvent;
 
 public final class SessionChatListener implements EventListener {
-
     @Inject
     private UnSignedVelocity plugin;
     @Inject
@@ -28,11 +26,8 @@ public final class SessionChatListener implements EventListener {
     }
 
     private void onChat(PacketReceiveEvent event) {
+        // Packet sent by players with version 1.19.3 and up
         if (!(event.getPacket() instanceof SessionPlayerChat)) {
-            return;
-        }
-
-        if (event.getPlayer().getProtocolVersion().compareTo(ProtocolVersion.MINECRAFT_1_19_1) < 0) {
             return;
         }
 
@@ -40,9 +35,10 @@ public final class SessionChatListener implements EventListener {
 
         final SessionPlayerChat chatPacket = (SessionPlayerChat) event.getPacket();
         final ConnectedPlayer player = (ConnectedPlayer) event.getPlayer();
+        final String chatMessage = chatPacket.getMessage();
 
         player.getChatQueue().queuePacket(
-                eventManager.fire(new PlayerChatEvent(player, chatPacket.getMessage()))
+                eventManager.fire(new PlayerChatEvent(player, chatMessage))
                         .thenApply(PlayerChatEvent::getResult)
                         .thenApply(result -> {
                             if (!result.isAllowed()) {
@@ -51,7 +47,7 @@ public final class SessionChatListener implements EventListener {
 
                             final boolean isModified = result
                                     .getMessage()
-                                    .map(str -> !str.equals(chatPacket.getMessage()))
+                                    .map(str -> !str.equals(chatMessage))
                                     .orElse(false);
 
                             if (isModified) {

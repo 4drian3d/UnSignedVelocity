@@ -16,7 +16,7 @@ import io.github._4drian3d.vpacketevents.api.event.PacketReceiveEvent;
 
 import java.util.concurrent.CompletableFuture;
 
-public class SessionCommandListener implements EventListener, CommandHandler<SessionPlayerCommand> {
+public final class SessionCommandListener implements EventListener, CommandHandler<SessionPlayerCommand> {
     @Inject
     private Configuration configuration;
     @Inject

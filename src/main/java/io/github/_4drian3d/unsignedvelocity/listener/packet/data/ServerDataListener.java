@@ -2,7 +2,6 @@ package io.github._4drian3d.unsignedvelocity.listener.packet.data;
 
 import com.google.inject.Inject;
 import com.velocitypowered.api.event.EventManager;
-import com.velocitypowered.api.network.ProtocolVersion;
 import com.velocitypowered.proxy.protocol.packet.ServerData;
 import io.github._4drian3d.unsignedvelocity.UnSignedVelocity;
 import io.github._4drian3d.unsignedvelocity.configuration.Configuration;
@@ -41,11 +40,11 @@ public final class ServerDataListener implements EventListener {
             return;
         }
 
-        if (event.getPlayer().getProtocolVersion().compareTo(ProtocolVersion.MINECRAFT_1_19_1) < 0) {
+        final ServerData serverData = (ServerData) event.getPacket();
+        if (serverData.isSecureChatEnforced()) {
             return;
         }
 
-        final ServerData serverData = (ServerData) event.getPacket();
         try {
             ENFORCED_SETTER.invoke(serverData, true);
         } catch (Throwable e) {

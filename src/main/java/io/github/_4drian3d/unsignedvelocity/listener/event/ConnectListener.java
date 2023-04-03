@@ -4,11 +4,12 @@ import com.google.inject.Inject;
 import com.velocitypowered.api.event.EventManager;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.PostLoginEvent;
+import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.crypto.IdentifiedKey;
 import com.velocitypowered.proxy.connection.client.ConnectedPlayer;
-import io.github._4drian3d.unsignedvelocity.listener.EventListener;
 import io.github._4drian3d.unsignedvelocity.UnSignedVelocity;
 import io.github._4drian3d.unsignedvelocity.configuration.Configuration;
+import io.github._4drian3d.unsignedvelocity.listener.EventListener;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
@@ -33,8 +34,12 @@ public class ConnectListener implements EventListener {
 
     @Subscribe
     void onJoin(PostLoginEvent event) throws Throwable {
-        if (configuration.removeSignedKey()) {
-            KEY_SETTER.invoke(event.getPlayer(), null);
+        if (!configuration.removeSignedKey()) {
+            return;
+        }
+        final Player player = event.getPlayer();
+        if (player.getIdentifiedKey() != null) {
+            KEY_SETTER.invoke(player, null);
         }
     }
 
