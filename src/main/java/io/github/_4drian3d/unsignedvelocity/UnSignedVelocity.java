@@ -16,12 +16,14 @@ import io.github._4drian3d.unsignedvelocity.listener.packet.command.KeyedCommand
 import io.github._4drian3d.unsignedvelocity.listener.packet.command.SessionCommandListener;
 import io.github._4drian3d.unsignedvelocity.listener.packet.data.ServerDataListener;
 import io.github._4drian3d.unsignedvelocity.utils.Constants;
+import io.github._4drian3d.velocityhexlogger.HexLogger;
 import org.bstats.velocity.Metrics;
-import org.slf4j.Logger;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.stream.Stream;
+
+import static net.kyori.adventure.text.minimessage.MiniMessage.miniMessage;
 
 @Plugin(
         id = "unsignedvelocity",
@@ -37,9 +39,9 @@ public final class UnSignedVelocity {
     @DataDirectory
     private Path path;
     @Inject
-    private Logger logger;
-    @Inject
     private Metrics.Factory factory;
+    @Inject
+    private HexLogger logger;
     private Configuration configuration;
 
 
@@ -69,11 +71,15 @@ public final class UnSignedVelocity {
         .filter(EventListener::canBeLoaded)
         .forEach(EventListener::register);
 
-        logger.info("UnSignedVelocity has been successfully loaded");
-        logger.info("Remove Signed Key: {}", configuration.removeSignedKey());
-        logger.info("UnSigned | Commands: {} | Chat: {}",
+        logger.info(miniMessage().deserialize(
+                "<gradient:#166D3B:#7F8C8D:#A29BFE>UnSignedVelocity</gradient> <#6892bd>has been successfully loaded"));
+        logger.info(miniMessage().deserialize(
+                "<#6892bd>Remove Signed Key: <aqua>{}"), configuration.removeSignedKey());
+        logger.info(miniMessage().deserialize(
+                "<#6892bd>UnSigned <dark_gray>|</dark_gray> Commands: <aqua>{}</aqua> <dark_gray>|</dark_gray> Chat: <aqua>{}"),
                 configuration.removeSignedCommandInformation(),
                 configuration.applyChatMessages());
-        logger.info("Secure Chat Data: {}", configuration.sendSecureChatData());
+        logger.info(miniMessage().deserialize(
+                "<#6892bd>Secure Chat Data: <aqua>{}"), configuration.sendSecureChatData());
     }
 }
