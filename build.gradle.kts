@@ -16,7 +16,6 @@ dependencies {
     compileOnly(libs.velocity.api)
     compileOnly(libs.velocity.proxy)
     annotationProcessor(libs.velocity.api)
-    compileOnly(libs.netty)
     compileOnly(libs.vpacketevents)
 }
 
