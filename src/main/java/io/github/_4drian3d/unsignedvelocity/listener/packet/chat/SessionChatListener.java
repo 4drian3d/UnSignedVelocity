@@ -27,13 +27,12 @@ public final class SessionChatListener implements EventListener {
 
     private void onChat(PacketReceiveEvent event) {
         // Packet sent by players with version 1.19.3 and up
-        if (!(event.getPacket() instanceof SessionPlayerChat)) {
+        if (!(event.getPacket() instanceof final SessionPlayerChat chatPacket)) {
             return;
         }
 
         event.setResult(ResultedEvent.GenericResult.denied());
 
-        final SessionPlayerChat chatPacket = (SessionPlayerChat) event.getPacket();
         final ConnectedPlayer player = (ConnectedPlayer) event.getPlayer();
         final String chatMessage = chatPacket.getMessage();
 

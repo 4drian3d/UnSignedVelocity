@@ -36,11 +36,10 @@ public final class ServerDataListener implements EventListener {
     }
 
     private void onData(final PacketSendEvent event) {
-        if (!(event.getPacket() instanceof ServerData)) {
+        if (!(event.getPacket() instanceof final ServerData serverData)) {
             return;
         }
 
-        final ServerData serverData = (ServerData) event.getPacket();
         if (serverData.isSecureChatEnforced()) {
             return;
         }

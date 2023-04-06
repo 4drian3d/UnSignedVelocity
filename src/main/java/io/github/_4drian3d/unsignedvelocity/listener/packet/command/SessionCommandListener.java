@@ -41,12 +41,12 @@ public final class SessionCommandListener implements EventListener, CommandHandl
     }
 
     public void onCommand(final PacketReceiveEvent event) {
-        if (!(event.getPacket() instanceof SessionPlayerCommand)) {
+        if (!(event.getPacket() instanceof final SessionPlayerCommand packet)) {
             return;
         }
+
         event.setResult(ResultedEvent.GenericResult.denied());
 
-        final SessionPlayerCommand packet = (SessionPlayerCommand) event.getPacket();
         final ConnectedPlayer player = (ConnectedPlayer) event.getPlayer();
         final String commandExecuted = packet.getCommand();
 

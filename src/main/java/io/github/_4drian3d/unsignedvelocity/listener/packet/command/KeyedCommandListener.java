@@ -42,13 +42,12 @@ public final class KeyedCommandListener implements EventListener, CommandHandler
     }
 
     public void onCommand(final PacketReceiveEvent event) {
-        if (!(event.getPacket() instanceof KeyedPlayerCommand)) {
+        if (!(event.getPacket() instanceof final KeyedPlayerCommand packet)) {
             return;
         }
 
         event.setResult(ResultedEvent.GenericResult.denied());
 
-        final KeyedPlayerCommand packet = (KeyedPlayerCommand) event.getPacket();
         final ConnectedPlayer player = (ConnectedPlayer) event.getPlayer();
         final String commandExecuted = packet.getCommand();
 

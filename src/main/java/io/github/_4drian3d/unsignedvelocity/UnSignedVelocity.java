@@ -30,7 +30,7 @@ import static net.kyori.adventure.text.minimessage.MiniMessage.miniMessage;
         name = "UnSignedVelocity",
         authors = {"4drian3d"},
         version = Constants.VERSION,
-        dependencies = { @Dependency(id = "vpacketevents")}
+        dependencies = { @Dependency(id = "vpacketevents") }
 )
 public final class UnSignedVelocity {
     @Inject
@@ -46,7 +46,7 @@ public final class UnSignedVelocity {
 
 
     @Subscribe
-    void onProxyInitialize(ProxyInitializeEvent event) {
+    void onProxyInitialize(final ProxyInitializeEvent event) {
         factory.make(this, 17514);
 
         try {

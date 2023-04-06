@@ -26,14 +26,13 @@ public final class KeyedChatListener implements EventListener {
 
     private void onChat(final PacketReceiveEvent event) {
         // Packet sent by players with version 1.19 and 1.19.1
-        if (!(event.getPacket() instanceof KeyedPlayerChat)) {
+        if (!(event.getPacket() instanceof final KeyedPlayerChat chatPacket)) {
             return;
         }
 
         event.setResult(ResultedEvent.GenericResult.denied());
 
         final ConnectedPlayer player = (ConnectedPlayer) event.getPlayer();
-        final KeyedPlayerChat chatPacket = (KeyedPlayerChat) event.getPacket();
         final String chatMessage = chatPacket.getMessage();
 
         player.getChatQueue().queuePacket(
