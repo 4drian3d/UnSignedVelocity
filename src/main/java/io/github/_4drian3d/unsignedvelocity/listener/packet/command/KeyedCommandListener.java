@@ -49,6 +49,7 @@ public final class KeyedCommandListener implements EventListener, CommandHandler
         event.setResult(ResultedEvent.GenericResult.denied());
 
         final ConnectedPlayer player = (ConnectedPlayer) event.getPlayer();
+        if (checkConnection(player)) return;
         final String commandExecuted = packet.getCommand();
 
         queueCommandResult(proxyServer, player, commandEvent -> {
