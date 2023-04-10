@@ -36,6 +36,8 @@ tasks {
         delete("run")
     }
     shadowJar {
+        archiveBaseName.set(rootProject.name)
+        archiveClassifier.set("")
         relocate("org.bstats", "io.github._4drian3d.unsignedvelocity.libs.bstats")
         relocate("io.github._4drian3d.velocityhexlogger", "io.github._4drian3d.unsignedvelocity.libs.velocityhexlogger")
         relocate("net.kyori.adventure.text.logger", "io.github._4drian3d.unsignedvelocity.libs.logger")
