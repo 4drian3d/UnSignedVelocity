@@ -32,7 +32,7 @@ public final class SessionChatListener implements EventListener {
         }
 
         final ConnectedPlayer player = (ConnectedPlayer) event.getPlayer();
-        if (checkConnection(player)) return;
+        if (!checkConnection(player)) return;
 
         event.setResult(ResultedEvent.GenericResult.denied());
 

@@ -31,7 +31,7 @@ public final class KeyedChatListener implements EventListener {
         }
 
         final ConnectedPlayer player = (ConnectedPlayer) event.getPlayer();
-        if (checkConnection(player)) return;
+        if (!checkConnection(player)) return;
 
         event.setResult(ResultedEvent.GenericResult.denied());
         final String chatMessage = chatPacket.getMessage();
