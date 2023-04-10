@@ -45,10 +45,10 @@ public final class SessionCommandListener implements EventListener, CommandHandl
             return;
         }
 
-        event.setResult(ResultedEvent.GenericResult.denied());
-
         final ConnectedPlayer player = (ConnectedPlayer) event.getPlayer();
         if (checkConnection(player)) return;
+
+        event.setResult(ResultedEvent.GenericResult.denied());
         final String commandExecuted = packet.getCommand();
 
         queueCommandResult(proxyServer, player, commandEvent -> {

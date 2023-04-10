@@ -31,10 +31,11 @@ public final class SessionChatListener implements EventListener {
             return;
         }
 
-        event.setResult(ResultedEvent.GenericResult.denied());
-
         final ConnectedPlayer player = (ConnectedPlayer) event.getPlayer();
         if (checkConnection(player)) return;
+
+        event.setResult(ResultedEvent.GenericResult.denied());
+
         final String chatMessage = chatPacket.getMessage();
 
         player.getChatQueue().queuePacket(
