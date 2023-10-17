@@ -7,12 +7,11 @@ plugins {
 
 repositories {
     maven("https://papermc.io/repo/repository/maven-public/")
-    maven("https://maven.elytrium.net/repo/")
+    maven("https://mvn.exceptionflug.de/repository/exceptionflug-public/")
 }
 
 dependencies {
     implementation(libs.bstats)
-    implementation(libs.velocityhexlogger)
     compileOnly(libs.velocity.api)
     compileOnly(libs.velocity.proxy)
     annotationProcessor(libs.velocity.api)
@@ -39,8 +38,6 @@ tasks {
         archiveBaseName.set(rootProject.name)
         archiveClassifier.set("")
         relocate("org.bstats", "io.github._4drian3d.unsignedvelocity.libs.bstats")
-        relocate("io.github._4drian3d.velocityhexlogger", "io.github._4drian3d.unsignedvelocity.libs.velocityhexlogger")
-        relocate("net.kyori.adventure.text.logger", "io.github._4drian3d.unsignedvelocity.libs.logger")
         minimize()
     }
     runVelocity {

@@ -16,7 +16,7 @@ import io.github._4drian3d.unsignedvelocity.listener.packet.command.KeyedCommand
 import io.github._4drian3d.unsignedvelocity.listener.packet.command.SessionCommandListener;
 import io.github._4drian3d.unsignedvelocity.listener.packet.data.ServerDataListener;
 import io.github._4drian3d.unsignedvelocity.utils.Constants;
-import io.github._4drian3d.velocityhexlogger.HexLogger;
+import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import org.bstats.velocity.Metrics;
 
 import java.io.IOException;
@@ -41,7 +41,7 @@ public final class UnSignedVelocity {
     @Inject
     private Metrics.Factory factory;
     @Inject
-    private HexLogger logger;
+    private ComponentLogger logger;
     private Configuration configuration;
 
 
